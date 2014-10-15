@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Beetee by michaeldorner</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Beetee</h1>
+        <p>Demo application for Bluetooth device scanning using the iOS private framework &quot;BluetoothManager&quot;</p>
+
+        <p class="view"><a href="https://github.com/michaeldorner/BeeTee">View the Project on GitHub <small>michaeldorner/BeeTee</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/michaeldorner/BeeTee/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/michaeldorner/BeeTee/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/michaeldorner/BeeTee">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="beetee" class="anchor" href="#beetee"><span class="octicon octicon-link"></span></a>BeeTee</h1>
+
+<p>Demo application for bluetooth device scanning using the iOS private framework "BluetoothManager"</p>
+
+<p><img src="https://raw.githubusercontent.com/michaeldorner/BeeTee/master/landingPage/screen.png" alt="GUI"></p>
+
+<h2>
+<a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Abstract</h2>
+
+<p>Because it is not trivial to use a private iOS framework, I implemented a demo application for the <code>BluetoothManager.framework</code> in iOS 7. I have not used the ARC.</p>
+
+<p>Based on the <a href="https://developer.apple.com/appstore/resources/approval/guidelines.html">AppStore guideline §2.5</a> not to use private (undocumented) functions it is not possible to publish apps with the <code>BluetoothManager.framework</code> in the AppStore. You may need a valid membership of the <a href="https://developer.apple.com/programs/ios/">iOS Developer Program</a>, because it makes sense that this app and framework does not work in the simulator.</p>
+
+<h2>
+<a name="requirements-for-this-app" class="anchor" href="#requirements-for-this-app"><span class="octicon octicon-link"></span></a>Requirements for this app</h2>
+
+<ul>
+<li>iOS 7 and greater</li>
+<li>iOS 7 compatible device (does not working on the simulator)</li>
+<li>Xcode 5 and greater</li>
+<li>Correctly placed header files (see Preparations)</li>
+</ul>
+
+<p>Except the GUI the app and the framework as well works also fine for iOS 5 and 6. But take care about the path (see next paragraph).</p>
+
+<h2>
+<a name="preparations" class="anchor" href="#preparations"><span class="octicon octicon-link"></span></a>Preparations</h2>
+
+<p>Just to clearify: Of course, since they are just two header files, it does not matter actually where the header files are placed in your project. But if you want to use the <code>BluetoothManager.framework</code> in other projects, it makes life easier just to import  the framework with the headers. </p>
+
+<ul>
+<li>Find the folder, e.g. by terminal
+<pre><code>open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/PrivateFrameworks/BluetoothManager.framework</code></pre>
+</li>
+<li>Extract the <a href="/Headers.zip">Headers.zip</a> archive and add the extracted folder <code>Headers</code> which includes <code>BluetoothManager.h</code> and <code>BluetoothDevice.h</code> in the directory above.</li>
+<li>Restart Xcode</li>
+<li>Now you will find the <code>BluetoothManager.framework</code> in Targets → YourApp → Build Phases → Link Binary With Libraries:
+<img src="https://raw.githubusercontent.com/michaeldorner/BeeTee/master/landingPage/linkLibrary.png" alt="Alt text">
+</li>
+</ul>
+
+<p>The folder can differ: Please take care about your iOS version!</p>
+
+<h2>
+<a name="the-bluetoothmanagerframework" class="anchor" href="#the-bluetoothmanagerframework"><span class="octicon octicon-link"></span></a>The BluetoothManager.framework</h2>
+
+<h4>
+<a name="available-notifications" class="anchor" href="#available-notifications"><span class="octicon octicon-link"></span></a>Available Notifications</h4>
+
+<pre><code>BluetoothAvailabilityChangedNotification
+BluetoothDiscoveryStateChangedNotification
+
+BluetoothDeviceDiscoveredNotification
+BluetoothDeviceRemovedNotification
+
+// more methods they are not used in this app
+BluetoothPowerChangedNotification
+BluetoothConnectabilityChangedNotification
+BluetoothDeviceUpdatedNotification
+
+BluetoothDeviceConnectSuccessNotification
+BluetoothConnectionStatusChangedNotification
+BluetoothDeviceDisconnectSuccessNotification
+</code></pre>
+
+<h4>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h4>
+
+<p>Can be used e.g. </p>
+
+<pre><code>[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bluetoothAvailabilityChanged:) name:@"BluetoothAvailabilityChangedNotification" object:nil];</code></pre>
+
+<p>and </p>
+
+<pre><code>- (void)bluetoothAvailabilityChanged:(NSNotification *)notification { ... }</code></pre>
+
+<h2>
+<a name="licence" class="anchor" href="#licence"><span class="octicon octicon-link"></span></a>Licence</h2>
+
+<p>GPL (v3)</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/michaeldorner">michaeldorner</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
